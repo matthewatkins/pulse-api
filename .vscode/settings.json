@@ -1,0 +1,35 @@
+{
+  // first enable formatOnSave
+  "editor.formatOnSave": true,
+  // then, turn it off for JS and JSX, we will do this via eslint
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  // show eslint icon at bottom toolbar
+  "eslint.alwaysShowStatus": true,
+  // run ESLint plugin to run on save
+  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#ff2052",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#ff537a",
+    "tab.activeBorder": "#ff537a",
+    "titleBar.activeBackground": "#ff2052",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#ff205299",
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "sash.hoverBorder": "#ff537a",
+    "statusBarItem.remoteBackground": "#ff2052",
+    "statusBarItem.remoteForeground": "#e7e7e7"
+  },
+  "peacock.color": "#FF2052"
+}
