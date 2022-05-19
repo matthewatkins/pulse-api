@@ -74,24 +74,28 @@ app.route({
     const flattenedMetrics = getMetrics.flat();
 
     flattenedMetrics.map(async (metric: Metric) => {
-      await context.prisma.metric.upsert({
-        where: {
-          uniqueKey: metric.uniqueKey
-        },
-        update: {
-          name: metric.name,
-          unit: metric.unit,
-          metricTimeStamp: metric.metricTimeStamp,
-          qty: metric.qty
-        },
-        create: {
-          uniqueKey: metric.uniqueKey,
-          name: metric.name,
-          unit: metric.unit,
-          metricTimeStamp: metric.metricTimeStamp,
-          qty: metric.qty
-        }
-      });
+      try {
+        await context.prisma.metric.upsert({
+          where: {
+            uniqueKey: metric.uniqueKey
+          },
+          update: {
+            name: metric.name,
+            unit: metric.unit,
+            metricTimeStamp: metric.metricTimeStamp,
+            qty: metric.qty
+          },
+          create: {
+            uniqueKey: metric.uniqueKey,
+            name: metric.name,
+            unit: metric.unit,
+            metricTimeStamp: metric.metricTimeStamp,
+            qty: metric.qty
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     reply.send(flattenedMetrics);
