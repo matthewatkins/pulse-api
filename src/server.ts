@@ -39,7 +39,16 @@ app.route({
     const response = await req;
     const { body }: any = response;
 
-    let dataToSend = {
+    // Metric type for data I'm creating
+    type Metric = {
+      uniqueKey: string,
+      metricTimeStamp: string,
+      name: string,
+      unit: string,
+      qty: number
+    }
+
+    let dataToSend: Metric = {
       uniqueKey: '',
       metricTimeStamp: '',
       name: '',
@@ -51,7 +60,7 @@ app.route({
       const metricData = metric.data.map((datum: any) => {
         return {
           ...dataToSend,
-          uniqueKey: `${datum.date.replace(/ /g, '')}-${metric.units}-${datum.qty}`,
+          uniqueKey: `${datum.date.replace(/ /g, '')}-${metric.name}`,
           name: metric.name,
           unit: metric.units,
           metricTimeStamp: datum.date,
@@ -64,9 +73,25 @@ app.route({
 
     const flattenedMetrics = getMetrics.flat();
 
-    await context.prisma.metric.createMany({
-      data: flattenedMetrics,
-      skipDuplicates: true
+    flattenedMetrics.map(async (metric: Metric) => {
+      await context.prisma.metric.upsert({
+        where: {
+          uniqueKey: metric.uniqueKey
+        },
+        update: {
+          name: metric.name,
+          unit: metric.unit,
+          metricTimeStamp: metric.metricTimeStamp,
+          qty: metric.qty
+        },
+        create: {
+          uniqueKey: metric.uniqueKey,
+          name: metric.name,
+          unit: metric.unit,
+          metricTimeStamp: metric.metricTimeStamp,
+          qty: metric.qty
+        }
+      });
     });
 
     reply.send(flattenedMetrics);
