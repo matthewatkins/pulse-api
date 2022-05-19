@@ -73,7 +73,7 @@ app.route({
 
     const flattenedMetrics = getMetrics.flat();
 
-    flattenedMetrics.map(async (metric: Metric) => {
+    await flattenedMetrics.map(async (metric: Metric) => {
       try {
         await context.prisma.metric.upsert({
           where: {
