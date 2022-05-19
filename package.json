@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node-dev --exit-child --respawn src/server.ts",
-    "start": "ts-node src/server.ts"
+    "start": "ts-node src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "prod": "node out/server.js"
   },
   "keywords": [],
   "author": "",
