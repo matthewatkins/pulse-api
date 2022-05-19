@@ -7,6 +7,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 const typeDefinitions = /* GraphQL */ `
   type Metric {
     id: ID
+    uniqueKey: String
     name: String
     metricTimeStamp: String
     unit: String
