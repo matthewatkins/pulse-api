@@ -3,6 +3,8 @@ import fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import { schema } from './schema';
 import { createContext } from './lib/client/context';
 
+const port = process.env.PORT || 4000;
+
 const app = fastify({ logger: false });
 
 const graphQLServer = createServer<{ req: FastifyRequest, reply: FastifyReply }>({
@@ -71,4 +73,4 @@ app.route({
   }
 })
 
-app.listen(4000);
+app.listen(port);
