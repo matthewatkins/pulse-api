@@ -26,9 +26,11 @@ export default async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
 
     const getMetrics = body.data.metrics.map((metric: any) => {
       const metricData = metric.data.map((datum: any) => {
+        const adjustedDate = new Date(`${datum.date}`).toISOString().split('T')[0];
+
         return {
           ...dataToSend,
-          uniqueKey: `${datum.date.replace(/ /g, '')}-${metric.name}`,
+          uniqueKey: `${adjustedDate}-${metric.name}`,
           name: metric.name,
           unit: metric.units,
           metricTimeStamp: datum.date,
