@@ -1,20 +1,18 @@
 import {
-  FastifyInstance,
-  FastifyPluginOptions,
+  FastifyPluginAsync,
   FastifyRequest,
   FastifyReply
 } from "fastify";
-import { createContext } from '../lib/client/context';
+import { createContext } from '../../lib/client/context';
 import { createServer } from '@graphql-yoga/node';
-import { schema } from '../schema';
-
+import { schema } from './schema';
 
 const graphQLServer = createServer<{ req: FastifyRequest, reply: FastifyReply }>({
   schema,
   context: createContext
 })
 
-export default async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
+const graphQL: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.route({
     url: '/graphql',
     method: ['GET', 'POST', 'OPTIONS'],
@@ -31,3 +29,5 @@ export default async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
     }
   })
 }
+
+export default graphQL;

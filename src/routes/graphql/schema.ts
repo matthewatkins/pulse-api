@@ -1,8 +1,8 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import { GraphQLYogaError } from "@graphql-yoga/node";
-import { GraphQLContext } from "./lib/client/context";
-import type { Metric } from '@prisma/client';
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+// import { GraphQLYogaError } from "@graphql-yoga/node";
+import { GraphQLContext } from "../../lib/client/context";
+// import type { Metric } from '@prisma/client';
+// import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 
 const typeDefinitions = /* GraphQL */ `
   type Metric {
