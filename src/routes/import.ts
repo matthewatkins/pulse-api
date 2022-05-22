@@ -1,8 +1,8 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { FastifyPluginAsync } from "fastify";
 import { createContext } from '../lib/client/context';
 
-export default async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
-  fastify.post('/import', {}, async (req, reply) => {
+const pulseImport: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
+  fastify.post('/import', async function (req, reply) {
     const context = await createContext();
     const response = await req;
     const { body }: any = response;
@@ -68,6 +68,7 @@ export default async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
       }
     });
 
-    reply.send(flattenedMetrics);
-  });
+    return flattenedMetrics;
+  })
 }
+export default pulseImport;
