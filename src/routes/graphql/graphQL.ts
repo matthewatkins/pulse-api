@@ -13,21 +13,15 @@ const graphQLServer = createServer<{ req: FastifyRequest, reply: FastifyReply }>
 })
 
 const graphQL: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.route({
-    url: '/graphql',
-    method: ['GET', 'POST', 'OPTIONS'],
-    handler: async (req, reply) => {
-      console.log('request', req.body);
+  fastify.all('/', async function (req, reply) {
+    const response = await graphQLServer.handleIncomingMessage(req, { req, reply });
 
-      const response = await graphQLServer.handleIncomingMessage(req, { req, reply });
-
-      response.headers.forEach((value, key) => {
-        reply.header(key, value)
-      })
-      reply.status(response.status);
-      reply.send(response.body);
-    }
-  })
+    response.headers.forEach((value, key) => {
+      reply.header(key, value)
+    })
+    reply.status(response.status);
+    reply.send(response.body);
+  });
 }
 
 export default graphQL;
